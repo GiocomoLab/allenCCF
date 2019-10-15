@@ -8,29 +8,30 @@
 % * remember to run one cell at a time, instead of the whole script at once *
 
 % directory of histology images
-image_folder = 'C:\Drive\Histology\cfos';
+[image_folder,probe_save_name_suffix,probe_lengths,processed_images_folder]=getProbeParametersAnimal('AA_190906_050');
+
 
 % directory to save the processed images -- can be the same as the above image_folder
 % results will be put inside a new folder called 'processed' inside of this image_folder
-save_folder = 'C:\Drive\Histology\cfos';
+save_folder = image_folder;
 
 % name of images, in order anterior to posterior or vice versa
 % once these are downsampled they will be named ['original name' '_processed.tif']
-image_file_names = dir([image_folder filesep '*.tif']); % get the contents of the image_folder
+image_file_names = dir([image_folder filesep '*.jpg']); % get the contents of the image_folder
 image_file_names = natsortfiles({image_file_names.name});
 % image_file_names = {'slide no 2_RGB.tif','slide no 3_RGB.tif','slide no 4_RGB.tif'}; % alternatively, list each image in order
 
 % if the images are individual slices (as opposed to images of multiple
 % slices, which must be cropped using the cell CROP AND SAVE SLICES)
-image_files_are_individual_slices = true;
+image_files_are_individual_slices = false;
 
 % use images that are already at reference atlas resolution (here, 10um/pixel)
-use_already_downsampled_image = true; 
+use_already_downsampled_image = false; 
 
 % pixel size parameters: microns_per_pixel of large images in the image
 % folder (if use_already_downsampled_images is set to false);
 % microns_per_pixel_after_downsampling should typically be set to 10 to match the atlas
-microns_per_pixel = 3.233;
+microns_per_pixel = 1.816;
 microns_per_pixel_after_downsampling = 10;
 
 
@@ -41,7 +42,7 @@ microns_per_pixel_after_downsampling = 10;
 % if the images are cropped (image_file_are_individual_slices = false),
 % name to save cropped slices as; e.g. the third cropped slice from the 2nd
 % image containing many slices will be saved as: save_folder/processed/save_file_name02_003.tif
-save_file_name = 'SS096_';
+save_file_name = 'combined_';
 
 % increase gain if for some reason the images are not bright enough
 gain = 1; 
@@ -74,7 +75,7 @@ close all
 %
 % if the images are already downsampled (use_already_downsampled_image = true), this will allow
 % you to adjust the contrast of each channel
-%
+%   
 % Open Histology Viewer figure
 try; figure(histology_figure);
 catch; histology_figure = figure('Name','Histology Viewer'); end

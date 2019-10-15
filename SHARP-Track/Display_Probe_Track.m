@@ -5,15 +5,25 @@
 %% ENTER PARAMETERS AND FILE LOCATION
 
 % file location of probe points
-processed_images_folder = 'C:\Drive\Histology\for tutorial - sample data\Richards_done\processed';
+%processed_images_folder = 'C:\Drive\Histology\for tutorial - sample data\Richards_done\processed';
 
 % directory of reference atlas files
-annotation_volume_location = 'C:\Drive\Histology\for tutorial\annotation_volume_10um_by_index.npy';
-structure_tree_location = 'C:\Drive\Histology\for tutorial\structure_tree_safe_2017.csv';
+
+addpath(genpath('C:\code\npy-matlab'))
+addpath(genpath('F:\code\allenCCF'))
+% directory of histology
+
+% name the saved probe points, to avoid overwriting another set of probes going in the same folder
+
+% directory of reference atlas files
+annotation_volume_location = 'F:\code\allenCCF\Allen\annotation_volume_10um_by_index.npy';
+structure_tree_location = 'F:\code\allenCCF\Allen\structure_tree_safe_2017.csv';
+template_volume_location = 'F:\code\allenCCF\Allen\template_volume_10um.npy';
 
 % name of the saved probe points
-probe_save_name_suffix = 'electrode_track_1';
-probe_save_name_suffix = '';
+%probe_save_name_suffix = 'electrode_track_1';
+[image_save_folder,probe_save_name_suffix,probe_lengths,processed_images_folder]=getProbeParametersAnimal('AA_190830_046');
+
 % either set to 'all' or a list of indices from the clicked probes in this file, e.g. [2,3]
 probes_to_analyze = 'all';  % [1 2]
 
@@ -21,7 +31,6 @@ probes_to_analyze = 'all';  % [1 2]
 % parameters
 % -----------
 % how far into the brain did you go from the surface, either for each probe or just one number for all -- in mm
-probe_lengths = 4; 
 
 % from the bottom tip, how much of the probe contained recording sites -- in mm
 active_probe_length = 3.84;
@@ -30,7 +39,7 @@ active_probe_length = 3.84;
 probe_radius = 100; 
 
 % overlay the distance between parent regions in gray (this takes a while)
-show_parent_category = true; 
+show_parent_category = false; 
 
 % plot this far or to the bottom of the brain, whichever is shorter -- in mm
 distance_past_tip_to_plot = .5;
@@ -72,6 +81,9 @@ active_probe_length = active_probe_length*100;
 % determine which probes to analyze
 if strcmp(probes_to_analyze,'all')
     probes = 1:size(probePoints.pointList.pointList,1);
+    if numel(probes)==1
+        probes = 1:size(probePoints.pointList.pointList,2);
+    end
 else
     probes = probes_to_analyze;
 end 
@@ -131,10 +143,13 @@ while ~(ann==1 && gotToCtx)
 end
 
 % plot brain grid
+if selected_probe==1
 fwireframe = plotBrainGrid([], [], fwireframe, black_brain); hold on; 
 fwireframe.InvertHardcopy = 'off';
-
+brainfig = gcf;
+end
 % plot probe points
+figure(brainfig)
 hp = plot3(curr_probePoints(:,1), curr_probePoints(:,3), curr_probePoints(:,2), '.','linewidth',2, 'color',[ProbeColors(selected_probe,:) .2],'markers',10);
 
 % plot brain entry point
@@ -165,7 +180,7 @@ end
 percent_of_tract_with_active_sites = min([active_probe_length / probe_length, 1.0]);
 active_site_start = probe_length*(1-percent_of_tract_with_active_sites);
 active_probe_position = round([active_site_start  probe_length]);
-
+    
 % plot line the length of the active probe sites in reference space
 plot3(m(1)+p(1)*[active_probe_position(1) active_probe_position(2)], m(3)+p(3)*[active_probe_position(1) active_probe_position(2)], m(2)+p(2)*[active_probe_position(1) active_probe_position(2)], ...
     'Color', ProbeColors(selected_probe,:), 'LineWidth', 1);
@@ -184,6 +199,21 @@ error_length = round(probe_radius / 10);
 % find and regions the probe goes through, confidence in those regions, and plot them
 borders_table = plotDistToNearestToTip(m, p, av, st, probe_length, error_length, active_site_start, distance_past_tip_to_plot, show_parent_category, show_region_table); % plots confidence score based on distance to nearest region along probe
 title(['Probe ' num2str(selected_probe)],'color',ProbeColors(selected_probe,:))
-
+cfn=sprintf('probe_%d_region_table.mat',selected_probe);
+probe_length = probe_length*10;
+if isfile(fullfile(processed_images_folder,cfn))
+    % Include the desired Default answer
+opts.Interpreter = 'Tex';
+opts.Default = 'Yes';
+% Use the TeX interpreter to format the question
+quest = 'Output file exists, do you want to continue? (Y)';
+answer = questdlg(quest,'Boundary Condition',...
+                  'Yes','No',opts);
+if strcmp(answer,'No')
+    break
+end
+end
+              
+save(fullfile(processed_images_folder,cfn),'borders_table','probe_length','active_site_start');
 pause(.05)
 end

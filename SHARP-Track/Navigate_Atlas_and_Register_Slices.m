@@ -1,21 +1,22 @@
 % ------------------------------------------------------------------------
 %          Run Allen Atlas Browser
 % ------------------------------------------------------------------------
+%%
+[image_save_folder,probe_save_name_suffix,probe_lengths,processed_images_folder]=getProbeParametersAnimal('AA_190906_050');
 
 
-%% ENTER FILE LOCATION AND PROBE-SAVE-NAME
+%% Some Defaults Paths
 
-
+addpath(genpath('C:\code\npy-matlab'))
+addpath(genpath('F:\code\allenCCF'))
 % directory of histology
-processed_images_folder = 'C:\Drive\Histology\cfos\processed'; 
 
 % name the saved probe points, to avoid overwriting another set of probes going in the same folder
-probe_save_name_suffix = ''; 
 
 % directory of reference atlas files
-annotation_volume_location = 'C:\Drive\Histology\for tutorial\annotation_volume_10um_by_index.npy';
-structure_tree_location = 'C:\Drive\Histology\for tutorial\structure_tree_safe_2017.csv';
-template_volume_location = 'C:\Drive\Histology\for tutorial\template_volume_10um.npy';
+annotation_volume_location = 'F:\code\allenCCF\Allen\annotation_volume_10um_by_index.npy';
+structure_tree_location = 'F:\code\allenCCF\Allen\structure_tree_safe_2017.csv';
+template_volume_location = 'F:\code\allenCCF\Allen\template_volume_10um.npy';
 
 
 

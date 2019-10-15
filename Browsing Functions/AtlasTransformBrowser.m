@@ -578,7 +578,9 @@ switch key_letter
         end
         
         ud.slice_shift = 0;
-        catch; 
+        catch ME
+            disp(ME.identifier)
+            disp(ME.message)
             disp(['loading failed']); end
 % d -- delete current transform or most recent probe point            
     case 'd' 

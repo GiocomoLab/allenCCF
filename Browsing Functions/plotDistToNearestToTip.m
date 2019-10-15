@@ -1,4 +1,4 @@
-function borders = plotDistToNearestToTip(m, p, av, st, rpl, error_length, active_site_start, probage_past_tip_to_plot, show_parent_category, show_region_table)
+function borders_table = plotDistToNearestToTip(m, p, av, st, rpl, error_length, active_site_start, probage_past_tip_to_plot, show_parent_category, show_region_table)
 
 
 % these are the query points along the probe tract
@@ -189,13 +189,19 @@ for b = 1:length(borders)-1
         end
         acr_for_table{b} = st.acronym{ann(borders(b)+1)};
         name{b} = st.safe_name{ann(borders(b)+1)};
+        parent_id = find(st.id==(st.parent_structure_id(ann(borders(b)+1))));
+        if ~isempty(parent_id)
+        parent_name{b} = st.acronym{parent_id};
+        else
+            parent_name{b}='';
+        end
         annBySegment(b) = ann(borders(b)+1); 
     end
 end
 yc(borders(2)) = 0;
 if show_region_table && ann_type==1
-    borders_table = table(yc(borders(2:end-1))', yc(borders(3:end))', acr_for_table(2:end)', name(2:end)', annBySegment(2:end)', ...
-     'VariableNames', {'upperBorder', 'lowerBorder', 'acronym', 'name', 'avIndex'})
+    borders_table = table(yc(borders(2:end-1))', yc(borders(3:end))', acr_for_table(2:end)', name(2:end)', parent_name(2:end)',annBySegment(2:end)', ...
+     'VariableNames', {'upperBorder', 'lowerBorder', 'acronym', 'name', 'parent_name','avIndex'})
 end
 
 
