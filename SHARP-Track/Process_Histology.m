@@ -9,7 +9,9 @@
 
 % directory of histology images
 [image_folder,probe_save_name_suffix,probe_lengths,processed_images_folder]=getProbeParametersAnimal('AA_190906_050');
-
+image_folder = 'Z:\giocomo\export\data\Projects\ContrastExperiment_neuropixels\histology\G5\combined';
+probe_save_name_suffix = 'combined';
+processed_images_folder = 'Z:\giocomo\export\data\Projects\ContrastExperiment_neuropixels\histology\G5\combined\processed';
 
 % directory to save the processed images -- can be the same as the above image_folder
 % results will be put inside a new folder called 'processed' inside of this image_folder

@@ -5,7 +5,7 @@
 %% ENTER PARAMETERS AND FILE LOCATION
 
 % file location of probe points
-processed_images_folder = 'C:\Drive\Histology\brainX\processed';
+%processed_images_folder = 'C:\Drive\Histology\brainX\processed';
 
 % directory of reference atlas files
 
@@ -22,7 +22,7 @@ template_volume_location = 'F:\code\allenCCF\Allen\template_volume_10um.npy';
 
 % name of the saved probe points
 %probe_save_name_suffix = 'electrode_track_1';
-[image_save_folder,probe_save_name_suffix,probe_lengths,processed_images_folder]=getProbeParametersAnimal('AA_190830_046');
+%[image_save_folder,probe_save_name_suffix,probe_lengths,processed_images_folder]=getProbeParametersAnimal('AA_190830_046');
 
 % either set to 'all' or a list of indices from the clicked probes in this file, e.g. [2,3]
 probes_to_analyze = 'all';  % [1 2]
@@ -53,7 +53,7 @@ scaling_factor = false;
 % additional parameters
 % ---------------------
 % plane used to view when points were clicked ('coronal' -- most common, 'sagittal', 'transverse')
-plane = 'coronal';
+plane = 'sagittal';
 
 % probe insertion direction 'down' (i.e. from the dorsal surface, downward -- most common!) 
 % or 'up' (from a ventral surface, upward)
@@ -170,11 +170,9 @@ while ~(ann==1 && out_of_brain) % && distance_stepped > .5*active_probe_length)
 end
 
 % plot brain grid
-if selected_probe==1
-fwireframe = plotBrainGrid([], [], fwireframe, black_brain); hold on; 
-fwireframe.InvertHardcopy = 'off';
+figure(fwireframe);
 brainfig = gcf;
-end
+
 % plot probe points
 figure(brainfig)
 hp = plot3(curr_probePoints(:,1), curr_probePoints(:,3), curr_probePoints(:,2), '.','linewidth',2, 'color',[ProbeColors(selected_probe,:) .2],'markers',10);

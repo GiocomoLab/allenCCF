@@ -3,7 +3,9 @@
 % ------------------------------------------------------------------------
 %%
 [image_save_folder,probe_save_name_suffix,probe_lengths,processed_images_folder]=getProbeParametersAnimal('AA_190906_050');
-
+image_save_folder = 'Z:\giocomo\export\data\Projects\ContrastExperiment_neuropixels\histology\G5\combined';
+probe_save_name_suffix = 'combined';
+processed_images_folder = 'Z:\giocomo\export\data\Projects\ContrastExperiment_neuropixels\histology\G5\combined\processed';
 
 %% Some Defaults Paths
 
@@ -20,7 +22,7 @@ template_volume_location = 'F:\code\allenCCF\Allen\template_volume_10um.npy';
 
 
 % plane to view ('coronal', 'sagittal', 'transverse')
-plane = 'coronal';
+plane = 'sagittal';
 
 
 %% GET PROBE TRAJECTORY POINTS
@@ -51,7 +53,7 @@ f = figure('Name','Atlas Viewer');
 % show histology in Slice Viewer
 try; figure(slice_figure_browser); title('');
 catch; slice_figure_browser = figure('Name','Slice Viewer'); end
-reference_size = size(tv);
+reference_size = size(tv_plot);
 sliceBrowser(slice_figure_browser, processed_images_folder, f, reference_size);
 
 
