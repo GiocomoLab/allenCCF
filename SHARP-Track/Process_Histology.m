@@ -8,10 +8,7 @@
 % * remember to run one cell at a time, instead of the whole script at once *
 
 % directory of histology images
-[image_folder,probe_save_name_suffix,probe_lengths,processed_images_folder]=getProbeParametersAnimal('AA_190906_050');
-image_folder = 'Z:\giocomo\export\data\Projects\ContrastExperiment_neuropixels\histology\G5\combined';
-probe_save_name_suffix = 'combined';
-processed_images_folder = 'Z:\giocomo\export\data\Projects\ContrastExperiment_neuropixels\histology\G5\combined\processed';
+image_folder = 'Y:\giocomo\export\data\Projects\JohnKei_NPH3\Histology\Kei\npHCNd2_R\npHCNd2_R1_zenlite3';
 
 % directory to save the processed images -- can be the same as the above image_folder
 % results will be put inside a new folder called 'processed' inside of this image_folder
@@ -19,9 +16,8 @@ save_folder = image_folder;
 
 % name of images, in order anterior to posterior or vice versa
 % once these are downsampled they will be named ['original name' '_processed.tif']
-image_file_names = dir([image_folder filesep '*.jpg']); % get the contents of the image_folder
+image_file_names = dir([image_folder filesep '*.tif']); % get the contents of the image_folder
 image_file_names = natsortfiles({image_file_names.name});
-% image_file_names = {'slide no 2_RGB.tif','slide no 3_RGB.tif','slide no 4_RGB.tif'}; % alternatively, list each image in order
 
 % if the images are individual slices (as opposed to images of multiple
 % slices, which must be cropped using the cell CROP AND SAVE SLICES)
@@ -51,12 +47,6 @@ gain = 1;
 
 % size in pixels of reference atlas brain coronal slice, typically 800 x 1140
 atlas_reference_size = [800 1140]; 
-
-
-
-
-
-
 
 % finds or creates a folder location for processed images -- 
 % a folder within save_folder called processed
@@ -112,6 +102,17 @@ end
 
 % close all figures
 close all
+
+% EJ added 11/26/19 to display all sections at once for easier reordering
+images_all = dir([folder_processed_images filesep '*tif']);
+images_all = natsortfiles({images_all.name});
+for i = 1:length(images_all)
+    curr_section = imread(fullfile(folder_processed_images, images_all{i}));
+    figure
+    imshow(curr_section,'InitialMagnification',30)
+    title(images_all{i})
+end
+pause
             
 % this takes images from folder_processed_images ([save_folder/processed]),
 % and allows you to rotate, flip, sharpen, crop, and switch their order, so they
@@ -122,7 +123,6 @@ close all
 %
 % note -- presssing left or right arrow saves the modified image, so be
 % sure to do this even after modifying the last slice in the folder
+
 slice_figure = figure('Name','Slice Viewer');
 SliceFlipper(slice_figure, folder_processed_images, atlas_reference_size)
-
-

@@ -2,24 +2,17 @@
 %          Run Allen Atlas Browser
 % ------------------------------------------------------------------------
 %%
-[image_save_folder,probe_save_name_suffix,probe_lengths,processed_images_folder]=getProbeParametersAnimal('AA_190906_050');
-image_save_folder = 'Z:\giocomo\export\data\Projects\ContrastExperiment_neuropixels\histology\G5\combined';
+% [image_save_folder,probe_save_name_suffix,probe_lengths,processed_images_folder]=getProbeParametersAnimal('AA_190906_050');
+% image_save_folder = 'Y:\giocomo\export\data\Projects\JohnKei_NPH3\Histology\Kei\npHCNd2_R\npHCNd2_R1_zenlite3';
 probe_save_name_suffix = 'combined';
-processed_images_folder = 'Z:\giocomo\export\data\Projects\ContrastExperiment_neuropixels\histology\G5\combined\processed';
+processed_images_folder = 'Y:\giocomo\export\data\Projects\JohnKei_NPH3\Histology\Kei\npHCNd2_R\npHCNd2_R1_zenlite3\processed';
 
 %% Some Defaults Paths
 
-addpath(genpath('C:\code\npy-matlab'))
-addpath(genpath('F:\code\allenCCF'))
-% directory of histology
-
-% name the saved probe points, to avoid overwriting another set of probes going in the same folder
-
 % directory of reference atlas files
-annotation_volume_location = 'F:\code\allenCCF\Allen\annotation_volume_10um_by_index.npy';
-structure_tree_location = 'F:\code\allenCCF\Allen\structure_tree_safe_2017.csv';
-template_volume_location = 'F:\code\allenCCF\Allen\template_volume_10um.npy';
-
+annotation_volume_location = 'C:\Users\giocomolab\Desktop\Allen Brain Atlas\annotation_volume_10um_by_index.npy';
+structure_tree_location = 'C:\Users\giocomolab\Desktop\Allen Brain Atlas\structure_tree_safe_2017.csv';
+template_volume_location = 'C:\Users\giocomolab\Desktop\Allen Brain Atlas\template_volume_10um.npy';
 
 % plane to view ('coronal', 'sagittal', 'transverse')
 plane = 'sagittal';
