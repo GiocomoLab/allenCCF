@@ -8,7 +8,7 @@
 % * remember to run one cell at a time, instead of the whole script at once *
 
 % directory of histology images
-image_folder = 'Y:\giocomo\export\data\Projects\JohnKei_NPH3\Histology\Kei\npHCNd2_R\npHCNd2_R1_zenlite3';
+image_folder = '/Users/KeiMasuda/Desktop/histology';
 
 % directory to save the processed images -- can be the same as the above image_folder
 % results will be put inside a new folder called 'processed' inside of this image_folder
@@ -76,8 +76,7 @@ warning('off', 'images:initSize:adjustingMag'); warning('off', 'MATLAB:colon:non
 % Function to downsample and adjust histology image
 HistologyBrowser(histology_figure, save_folder, image_folder, image_file_names, folder_processed_images, image_files_are_individual_slices, ...
             use_already_downsampled_image, microns_per_pixel, microns_per_pixel_after_downsampling, gain)
-
-  
+fprintf('done')
 
 %% CROP AND SAVE SLICES -- run once the above is done, if image_file_are_individual_slices = false
 
@@ -104,7 +103,7 @@ end
 close all
 
 % EJ added 11/26/19 to display all sections at once for easier reordering
-images_all = dir([folder_processed_images filesep '*tif']);
+images_all = dir([folder_processed_images filesep '*combined*.tif']);
 images_all = natsortfiles({images_all.name});
 for i = 1:length(images_all)
     curr_section = imread(fullfile(folder_processed_images, images_all{i}));
@@ -112,8 +111,8 @@ for i = 1:length(images_all)
     imshow(curr_section,'InitialMagnification',30)
     title(images_all{i})
 end
-pause
-            
+
+%%             
 % this takes images from folder_processed_images ([save_folder/processed]),
 % and allows you to rotate, flip, sharpen, crop, and switch their order, so they
 % are in anterior->posterior or posterior->anterior order, and aesthetically pleasing
