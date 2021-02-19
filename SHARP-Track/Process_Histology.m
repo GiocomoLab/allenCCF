@@ -8,7 +8,7 @@
 % * remember to run one cell at a time, instead of the whole script at once *
 
 % directory of histology images
-image_folder = 'Y:\giocomo\export\data\Projects\JohnKei_NPH3\Histology\Kei\npHCNd2_R\npHCNd2_R1_zenlite3';
+image_folder = 'C:\Users\emily\Downloads\Histology';
 
 % directory to save the processed images -- can be the same as the above image_folder
 % results will be put inside a new folder called 'processed' inside of this image_folder
@@ -16,7 +16,7 @@ save_folder = image_folder;
 
 % name of images, in order anterior to posterior or vice versa
 % once these are downsampled they will be named ['original name' '_processed.tif']
-image_file_names = dir([image_folder filesep '*.tif']); % get the contents of the image_folder
+image_file_names = dir([image_folder filesep '*.jpg']); % get the contents of the image_folder
 image_file_names = natsortfiles({image_file_names.name});
 
 % if the images are individual slices (as opposed to images of multiple

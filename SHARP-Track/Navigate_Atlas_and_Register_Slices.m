@@ -5,14 +5,14 @@
 % [image_save_folder,probe_save_name_suffix,probe_lengths,processed_images_folder]=getProbeParametersAnimal('AA_190906_050');
 % image_save_folder = 'Y:\giocomo\export\data\Projects\JohnKei_NPH3\Histology\Kei\npHCNd2_R\npHCNd2_R1_zenlite3';
 probe_save_name_suffix = 'combined';
-processed_images_folder = 'Y:\giocomo\export\data\Projects\JohnKei_NPH3\Histology\Kei\npHCNd2_R\npHCNd2_R1_zenlite3\processed';
+processed_images_folder = 'C:\Users\emily\Downloads\Histology\processed';
 
 %% Some Defaults Paths
 
 % directory of reference atlas files
-annotation_volume_location = 'C:\Users\giocomolab\Desktop\Allen Brain Atlas\annotation_volume_10um_by_index.npy';
-structure_tree_location = 'C:\Users\giocomolab\Desktop\Allen Brain Atlas\structure_tree_safe_2017.csv';
-template_volume_location = 'C:\Users\giocomolab\Desktop\Allen Brain Atlas\template_volume_10um.npy';
+annotation_volume_location = 'C:\Users\emily\Downloads\Histology\annotation_volume_10um_by_index.npy';
+structure_tree_location = 'C:\Users\emily\OneDrive - Stanford\GitHub\GiocomoLab\allenCCF\structure_tree_safe_2017.csv';
+template_volume_location = 'C:\Users\emily\Downloads\Histology\template_volume_10um.npy';
 
 % plane to view ('coronal', 'sagittal', 'transverse')
 plane = 'sagittal';
@@ -61,3 +61,15 @@ f = AtlasTransformBrowser(f, tv_plot, av_plot, st, slice_figure_browser, process
 % save_location = processed_images_folder;
 % f = allenAtlasBrowser(tv_plot, av_plot, st, save_location, probe_save_name_suffix);
 
+
+% Flip?
+pause
+files = dir('C:\Users\emily\Downloads\Histology\processed/*.tif');
+for iF =1:numel(files)
+    fp = fullfile(files(iF).folder,files(iF).name);
+    im = imread(fp);
+    im = flip(imrotate(im,-90),1);
+    %figure;
+    %imshow(im)
+    imwrite(im,fp);
+end
