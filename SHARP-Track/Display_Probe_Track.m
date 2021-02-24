@@ -241,5 +241,6 @@ for selected_probe = probes
     end
     
     save(fullfile(processed_images_folder,cfn),'borders_table','probe_length','active_site_start');
+    writetable(borders_table,fullfile(processed_images_folder,'borders_table.txt'))
     pause(.05)
 end
